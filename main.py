@@ -20,13 +20,11 @@ with open(plik) as f:
 
 print("krok: {} ms/probke".format(dane["krok"]*1000))
 print("liczba odczytanych probek: {}".format(len(dane["probki"])))
-
-decimate = signal.decimate (dane["probki"], 10)
+decimate = signal.decimate(dane["probki"], 10)
 print("liczba odczytanych probek: {}".format(len(decimate)))
 
 filtr = signal.firwin2(300, [0, 0.005, 0.01, 1], [1, 1, 0, 0])
 wynik = signal.convolve(filtr, decimate, mode='valid')
-
 widmo = fft(wynik)
 max_value = max(widmo)
 czas = [a*dane["krok"] for a in range(len(widmo))]
@@ -45,5 +43,6 @@ plt.plot(czas, wynik)
 plt.show()
 plt.plot(widmo)
 plt.show()
-# puls [Hz]: 0.88(3)
-# puls [s] : 1.132
+
+# puls[Hz]: ~0.88(3)
+# puls[s] : ~1.132
